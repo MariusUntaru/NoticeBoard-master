@@ -36,9 +36,9 @@ jobs:
         with:
           java-version: 11.0.4
       - name: SonarCloud Scan
-        run: mvn -B clean verify -Psonar -Dsonar.login=MariusUntaru@github
+        run: mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=MariusUntaru_NoticeBoard-master
         env:
-          SONAR_TOKEN: "88e8e9821b75ec19d4529eae97710a556eeacc57"   
+          SONAR_TOKEN: "d61d7effae2803f06c82a1d31511815d5ca0a57c"   
           
   artifact:
     name: Publish - GitHub Packages
