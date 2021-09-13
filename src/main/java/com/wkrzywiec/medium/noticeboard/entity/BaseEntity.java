@@ -26,6 +26,15 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="creation_date", columnDefinition="TIMESTAMP DEFAULT NOW()")
