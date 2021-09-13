@@ -22,4 +22,11 @@ jobs:
         run: mvn -B clean package -DskipTests
       - name: Maven Verify
         run: mvn -B clean verify
+      - name: Monitor coverage
+        uses: slavcodev/coverage-monitor-action@1.2.0
+        with:
+          github_token: "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"
+          clover_file: "logs/clover.xml"
+          threshold_alert: 10
+          threshold_warning: 50
 
