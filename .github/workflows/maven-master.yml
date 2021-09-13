@@ -25,6 +25,22 @@ jobs:
       - name: Maven Verify
         run: mvn -B clean verify -Pintegration-test
 
+
+      - name: Test Coverage Comparison of Added & Modified Files
+  # You may pin to the exact commit or the version.
+  # uses: AveryCameronUofR/test-coverage-check-gh-action@8bbd56b2c0f24baa564396dc96c9aecc334b5aa5
+        uses: AveryCameronUofR/test-coverage-check-gh-action@1.1.1
+        with:
+    # minimum coverage a new file has to have to pass
+          minNewCoverage: 0.5 # optional, default is 0.8
+    # Max amount coverage can reduce and pass
+          maxCoverageChange: 0.1 # optional, default is 0.1
+    # GitHub Personal Access Token
+          token: "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"
+    # Base ref branch to merge into and check cov against
+          branch: 'master'
+
+
   sonar:
     name: Test - SonarCloud Scan
     runs-on: ubuntu-latest
