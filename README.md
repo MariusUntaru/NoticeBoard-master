@@ -41,7 +41,3 @@ In this project there are located several integration tests for REST endpoints d
 ```shell script
 mvn clean verify -P integration-test
 ```
-
-## License 
-
-The MIT License - 2020 - Wojciech Krzywiec
