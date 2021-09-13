@@ -1,3 +1,6 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
 name: Master Branch
 
 on:
@@ -9,7 +12,7 @@ jobs:
 
   test:
     name: Test - Units & Integrations
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -24,7 +27,7 @@ jobs:
 
   sonar:
     name: Test - SonarCloud Scan
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -33,13 +36,13 @@ jobs:
         with:
           java-version: 11.0.4
       - name: SonarCloud Scan
-        run: mvn -B clean verify -Psonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: mvn -B clean verify -Psonar -Dsonar.login=MariusUntaru@github
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: "88e8e9821b75ec19d4529eae97710a556eeacc57"   
           
   artifact:
     name: Publish - GitHub Packages
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: [test, sonar]
 
     steps:
@@ -50,8 +53,9 @@ jobs:
           java-version: 11.0.4
       - name: Publish artifact on GitHub Packages
         run: mvn -B clean deploy -DskipTests
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env: 
+          "@MariusUntaru:registry": "https://npm.pkg.github.com"
+
 
 
   docker:
@@ -59,12 +63,12 @@ jobs:
     runs-on: ubuntu-18.04
     needs: [test, sonar]
     env:
-      REPO: ${{ secrets.DOCKER_REPO }}
+      REPO: "mariusuntaru96/invoice-system"
 
     steps:
       - uses: actions/checkout@v1
       - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+        run: docker login -u "mariusuntaru96" -p "bnK4tBU!frtXN2MHKAHzia"
       - name: Build Docker image
         run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
       - name: Publish Docker image
